@@ -23,13 +23,14 @@ func SearchNovels(c *gin.Context) {
 			resultData, err := common.FetchHtml(novelName, currentRule)
 			if err != nil {
 				log.Println("Request URL error", err)
-				c.JSON(http.StatusOK, gin.H{"statue": 0, "info": "Request error"})
+				c.JSON(http.StatusOK, gin.H{"statue": 0, "msg": "Request error"})
+			} else {
+				c.JSON(http.StatusOK, gin.H{"status": 1, "info": resultData})
 			}
-			c.JSON(http.StatusOK, gin.H{"status": 1, "info": resultData})
 		} else {
-			c.JSON(http.StatusOK, gin.H{"statue": 0, "info": "Parameter error"})
+			c.JSON(http.StatusOK, gin.H{"statue": 0, "msg": "Parameter error"})
 		}
 	} else {
-		c.JSON(http.StatusOK, gin.H{"statue": 0, "info": "Parameter name can't be empty"})
+		c.JSON(http.StatusOK, gin.H{"statue": 0, "msg": "Parameter name can't be empty"})
 	}
 }

@@ -22,6 +22,8 @@ type NovelRule struct {
 	Name       string
 	HomeUrl    string
 	SearchUrl  string
+	Method     string
+	Params     map[string]string
 	TargetItem string
 	ItemRule   ItemRuleConfig
 }
@@ -70,6 +72,8 @@ var (
 			Name:       "笔趣阁01",
 			HomeUrl:    "https://www.bqg99.cc/",
 			SearchUrl:  "https://www.bqg99.cc/s.php?q=",
+			Method:     "Get",
+			Params:     make(map[string](string)),
 			TargetItem: ".bookbox",
 			ItemRule:   ItemRule01,
 		},
@@ -77,6 +81,8 @@ var (
 			Name:       "笔趣阁02",
 			HomeUrl:    "http://www.cdzdgw.com/",
 			SearchUrl:  "http://www.cdzdgw.com/s.php?q=",
+			Method:     "Get",
+			Params:     make(map[string](string)),
 			TargetItem: ".bookbox",
 			ItemRule:   ItemRule01,
 		},
@@ -84,20 +90,35 @@ var (
 			Name:       "笔趣阁03",
 			HomeUrl:    "http://www.biqugex.com/",
 			SearchUrl:  "http://www.biqugex.com/s.php?q=",
+			Method:     "Get",
+			Params:     make(map[string](string)),
 			TargetItem: ".bookbox",
 			ItemRule:   ItemRule01,
 		},
-		"20": NovelRule{
+		"100": NovelRule{
 			Name:       "新笔趣阁01",
 			HomeUrl:    "http://www.biqugetv.com/",
 			SearchUrl:  "http://zhannei.baidu.com/cse/search?click=1&s=16765504158186272814&q=",
+			Method:     "Get",
+			Params:     make(map[string](string)),
 			TargetItem: "div.result-list div.result-item",
 			ItemRule:   ItemRule02,
 		},
-		"30": NovelRule{
+		"110": NovelRule{
 			Name:       "笔下文学01",
 			HomeUrl:    "http://www.xbxwx.net/",
 			SearchUrl:  "http://so.xbxwx.net/cse/search?click=1&entry=1&s=10874778206555383279&q=",
+			Method:     "Get",
+			Params:     make(map[string](string)),
+			TargetItem: "div.result-list div.result-item",
+			ItemRule:   ItemRule02,
+		},
+		"120": NovelRule{
+			Name:       "顶点小说01",
+			HomeUrl:    "http://www.23wx.cc/du/99/99646/",
+			SearchUrl:  "http://zhannei.baidu.com/cse/search?s=17788970894453164958&q=",
+			Method:     "Get",
+			Params:     make(map[string](string)),
 			TargetItem: "div.result-list div.result-item",
 			ItemRule:   ItemRule02,
 		},

@@ -1,15 +1,14 @@
 package common
 
 import (
-	"io/ioutil"
 	"log"
-	"net/http"
 	"net/url"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/axgle/mahonia"
 	"github.com/howie6879/owllook_api/config"
+	"github.com/levigross/grequests"
 	"github.com/saintfish/chardet"
 )
 
@@ -50,10 +49,8 @@ func FetchHtml(name string, rule config.NovelRule) ([]map[string]string, error) 
 		log.Println("Request URL error", err)
 		return resultData, err
 	}
-	defer response.Body.Close()
 	if response.StatusCode == 200 {
-		body, _ := ioutil.ReadAll(response.Body)
-		raw_html := DetectBody(body)
+		raw_html := DetectBody(response.Bytes())
 		doc, _ := goquery.NewDocumentFromReader(strings.NewReader(raw_html))
 		doc.Find(rule.TargetItem).Each(func(i int, s *goquery.Selection) {
 			novelName := s.Find(rule.ItemRule.NovelName).Text()
@@ -85,14 +82,15 @@ func FetchHtml(name string, rule config.NovelRule) ([]map[string]string, error) 
 }
 
 // RequestURL returns a search result
-func RequestURL(url string) (*http.Response, error) {
-	tr := &http.Transport{
-		MaxIdleConns:        20,
-		MaxIdleConnsPerHost: 20,
+func RequestURL(url string) (*grequests.Response, error) {
+	ro := &grequests.RequestOptions{
+		Headers: map[string]string{"User-Agent": config.GetUserAgent()},
 	}
-	client := &http.Client{Transport: tr}
-	req, _ := http.NewRequest("GET", url, nil)
-	req.Header.Set("User-Agent", config.GetUserAgent())
-	response, err := client.Do(req)
-	return response, err
+	resp, err := grequests.Get(url, ro)
+	if err != nil {
+		log.Println("Unable to make request: ", err)
+	}
+
+	// log.Println(resp.String())
+	return resp, err
 }
