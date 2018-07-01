@@ -1,5 +1,7 @@
 ## owllook小说接口
 
+[![GitHub release](https://img.shields.io/github/release/howie6879/owllook_api.svg)](https://github.com/howie6879/owllook_api/releases) [![Github All Releases](https://img.shields.io/github/downloads/howie6879/owllook_api/total.svg)](https://github.com/howie6879/owllook_api/releases) [![license](https://img.shields.io/github/license/howie6879/owllook_api.svg)](https://github.com/howie6879/owllook_api/blob/master/LICENSE)
+
 本项目提供优雅的小说接口，其他衍生项目如下：
 
 - 公众号：[**粮草小说**](http://oe7yjec8x.bkt.clouddn.com/howie/2018-03-13-%E7%B2%AE%E8%8D%89%E5%B0%8F%E8%AF%B4.jpg-blog.howie)，有兴趣的话可以关注下
@@ -21,6 +23,11 @@ cd owllook_api
 go get -u github.com/kardianos/govendor
 govendor sync
 go run main.go
+
+# 编译
+CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o ./release/owllook_api.mac
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build  -o ./release/owllook_api.linux
+CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o ./release/owllook_api.exe
 ```
 
 #### API
