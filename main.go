@@ -18,5 +18,6 @@ func main() {
 	router.GET("/", Index)
 	v1 := router.Group("v1")
 	v1.GET("/novels/:name/:source", apis.SearchNovels)
+	v1.GET("/authors/:name/:source", apis.SearchAuthors)
 	router.Run()
 }

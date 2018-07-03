@@ -42,9 +42,17 @@ func MakeAbsolute(homeUrl string, currentUrl string) string {
 
 // FetchHtml returns a raw html
 func FetchHtml(name string, rule config.NovelRule) ([]map[string]string, error) {
-	url := rule.SearchUrl + name
-	response, err := RequestURL(url)
 	var resultData []map[string]string
+	var searchUrl string
+	if rule.KeywordEncoding == "" {
+		searchUrl = rule.SearchUrl + url.QueryEscape(name)
+	} else {
+		keyword := mahonia.NewEncoder(rule.KeywordEncoding).ConvertString(name)
+		quote_keyword := url.QueryEscape(keyword)
+		searchUrl = rule.SearchUrl + quote_keyword
+	}
+	log.Println(searchUrl)
+	response, err := RequestURL(searchUrl)
 	if err != nil {
 		log.Println("Request URL error", err)
 		return resultData, err
@@ -53,9 +61,14 @@ func FetchHtml(name string, rule config.NovelRule) ([]map[string]string, error) 
 		raw_html := DetectBody(response.Bytes())
 		doc, _ := goquery.NewDocumentFromReader(strings.NewReader(raw_html))
 		doc.Find(rule.TargetItem).Each(func(i int, s *goquery.Selection) {
+			var absoluteNovelUrl string
 			novelName := s.Find(rule.ItemRule.NovelName).Text()
 			novelUrl, _ := s.Find(rule.ItemRule.NovelUrl).Attr("href")
-			absoluteNovelUrl := MakeAbsolute(rule.HomeUrl, novelUrl)
+			if novelUrl != "" {
+				absoluteNovelUrl = MakeAbsolute(rule.HomeUrl, novelUrl)
+			} else {
+				absoluteNovelUrl = novelUrl
+			}
 			novelType := s.Find(rule.ItemRule.NovelType).Text()
 			novelCover, _ := s.Find(rule.ItemRule.NovelCover).Attr("src")
 			absoluteNovelCover := MakeAbsolute(rule.HomeUrl, novelCover)

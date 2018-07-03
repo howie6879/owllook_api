@@ -76,3 +76,83 @@ curl http://0.0.0.0:8080/v1/novels/牧神记/10
 }
 ```
 
+**搜索作者：**
+
+格式：/v1/authors/:name/:source
+
+请求：
+
+``` shell
+curl http://0.0.0.0:8080/v1/authors/猫腻/10
+```
+
+响应：
+
+``` json
+{
+    "info": [
+        {
+            "novel_abstract": "千里杀一人，十步不愿行。",
+            "novel_author": "作者：猫腻",
+            "novel_cover": "https://www.bqg99.cc/bookimages/1849310.jpg",
+            "novel_latest_chapter_name": "今天没有更新",
+            "novel_latest_chapter_url": "https://www.bqg99.cc/book/1847953/594800464.html",
+            "novel_name": "大道朝天",
+            "novel_type": "分类：玄幻",
+            "novel_url": "https://www.bqg99.cc/book/1847953/",
+            "source_name": "笔趣阁01",
+            "source_url": "https://www.bqg99.cc/"
+        },
+        {
+            "novel_abstract": "命里有时终须有，命里无时要强求。　　这是一个长生果的故事。……",
+            "novel_author": "作者：猫腻",
+            "novel_cover": "https://www.bqg99.cc/bookimages/1008998084.jpg",
+            "novel_latest_chapter_name": "后记",
+            "novel_latest_chapter_url": "https://www.bqg99.cc/book/1008996727/644149409.html",
+            "novel_name": "择天记",
+            "novel_type": "分类：玄幻",
+            "novel_url": "https://www.bqg99.cc/book/1008996727/",
+            "source_name": "笔趣阁01",
+            "source_url": "https://www.bqg99.cc/"
+        },
+        {
+            "novel_abstract": "与天斗，其乐无穷。　　……",
+            "novel_author": "作者：猫腻",
+            "novel_cover": "https://www.bqg99.cc/bookimages/1010262420.jpg",
+            "novel_latest_chapter_name": "第六卷忽然之间 第一百三十章 结尾",
+            "novel_latest_chapter_url": "https://www.bqg99.cc/book/1010261063/959174919.html",
+            "novel_name": "将夜",
+            "novel_type": "分类：玄幻",
+            "novel_url": "https://www.bqg99.cc/book/1010261063/",
+            "source_name": "笔趣阁01",
+            "source_url": "https://www.bqg99.cc/"
+        },
+        {
+            "novel_abstract": "世界上有两件东西能够深深地震撼人们的心灵，一件是我们心中崇高的道德准则，另一件是我们头顶上灿烂的星空——康德　　当许……",
+            "novel_author": "作者：猫腻",
+            "novel_cover": "https://www.bqg99.cc/bookimages/1011122532.jpg",
+            "novel_latest_chapter_name": "最后的单章：间客关门八件事",
+            "novel_latest_chapter_url": "https://www.bqg99.cc/book/1011121175/979602210.html",
+            "novel_name": "间客",
+            "novel_type": "分类：玄幻",
+            "novel_url": "https://www.bqg99.cc/book/1011121175/",
+            "source_name": "笔趣阁01",
+            "source_url": "https://www.bqg99.cc/"
+        },
+        {
+            "novel_abstract": "积善之家，必有余庆，留余庆，留余庆，忽遇恩人；幸娘亲，幸娘亲，积得阴功。劝人生，济困扶穷……而谁可知，人生于世，……",
+            "novel_author": "作者：猫腻",
+            "novel_cover": "https://www.bqg99.cc/bookimages/1012231120.jpg",
+            "novel_latest_chapter_name": "第七卷朝天子 末章 后来",
+            "novel_latest_chapter_url": "https://www.bqg99.cc/book/1012229763/989671183.html",
+            "novel_name": "庆余年",
+            "novel_type": "分类：历史",
+            "novel_url": "https://www.bqg99.cc/book/1012229763/",
+            "source_name": "笔趣阁01",
+            "source_url": "https://www.bqg99.cc/"
+        }
+    ],
+    "status": 1
+}
+```
+

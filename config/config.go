@@ -19,13 +19,14 @@ type ItemRuleConfig struct {
 
 // NovelRule contains information about novle's source
 type NovelRule struct {
-	Name       string
-	HomeUrl    string
-	SearchUrl  string
-	Method     string
-	Params     map[string]string
-	TargetItem string
-	ItemRule   ItemRuleConfig
+	Name            string
+	HomeUrl         string
+	SearchUrl       string
+	Method          string
+	Params          map[string]string
+	KeywordEncoding string
+	TargetItem      string
+	ItemRule        ItemRuleConfig
 }
 
 var (
@@ -66,61 +67,129 @@ var (
 		NovelLatestChapterName: "p.result-game-item-info-tag a.result-game-item-info-tag-item",
 		NovelLatestChapterUrl:  "p.result-game-item-info-tag a.result-game-item-info-tag-item",
 	}
-
+	// 全本小说网的小说检索规则
+	ItemRule03 = ItemRuleConfig{
+		NovelName:              "h1.f20h",
+		NovelUrl:               "div.option span.btopt a",
+		NovelType:              "div.box_intro > div.box_info > table > tbody > tr:nth-child(1) > td > div:nth-child(1) > p:nth-child(3) > a",
+		NovelAuthor:            "div.box_info > table > tbody > tr:nth-child(1) > td > div:nth-child(1) > p:nth-child(2)",
+		NovelCover:             "div.box_intro div.pic img",
+		NovelAbstract:          "div.intro",
+		NovelLatestChapterName: "div.box_info > table > tbody > tr:nth-child(1) > td > div:nth-child(1) > p:nth-child(2) a",
+		NovelLatestChapterUrl:  "div.box_info > table > tbody > tr:nth-child(1) > td > div:nth-child(1) > p:nth-child(2) a",
+	}
+	// 全本小说网的作者信息检索规则 这里自定义为key_1 其中NovelUrl 值获取的是下载地址 客户端可根据最新章节地址提取出path就是目录地址
+	ItemRule04 = ItemRuleConfig{
+		NovelName:              "ul.info>h2>b>a>font",
+		NovelUrl:               "",
+		NovelType:              "ul.info > li:nth-child(4) > font:nth-child(2)",
+		NovelAuthor:            "ul.info > li:nth-child(4) > font:nth-child(1) > b",
+		NovelCover:             "ul.info a img",
+		NovelAbstract:          "ul.info > li:nth-child(3)",
+		NovelLatestChapterName: "ul.info > h2 > a > font > b",
+		NovelLatestChapterUrl:  "ul.info > h2 > a",
+	}
+	// 新笔趣阁的解析规则
+	ItemRule05 = ItemRuleConfig{
+		NovelName:              "h3.result-item-title a span",
+		NovelUrl:               "h3.result-item-title a",
+		NovelType:              "div.result-game-item-info > p:nth-child(2) > span:nth-child(2)",
+		NovelAuthor:            "div.result-game-item-info > p:nth-child(1) > span:nth-child(2)",
+		NovelCover:             "img.result-game-item-pic-link-img",
+		NovelAbstract:          "p.result-game-item-desc",
+		NovelLatestChapterName: "div.result-game-item-info p.result-game-item-info-tag a.result-game-item-info-tag-item",
+		NovelLatestChapterUrl:  "div.result-game-item-info p.result-game-item-info-tag a.result-game-item-info-tag-item",
+	}
 	NovelsRulesMap = map[string]NovelRule{
 		"10": NovelRule{
-			Name:       "笔趣阁01",
-			HomeUrl:    "https://www.bqg99.cc/",
-			SearchUrl:  "https://www.bqg99.cc/s.php?q=",
-			Method:     "Get",
-			Params:     make(map[string](string)),
-			TargetItem: ".bookbox",
-			ItemRule:   ItemRule01,
+			Name:            "笔趣阁01",
+			HomeUrl:         "https://www.bqg99.cc/",
+			SearchUrl:       "https://www.bqg99.cc/s.php?q=",
+			Method:          "Get",
+			Params:          make(map[string](string)),
+			KeywordEncoding: "",
+			TargetItem:      ".bookbox",
+			ItemRule:        ItemRule01,
 		},
 		"11": NovelRule{
-			Name:       "笔趣阁02",
-			HomeUrl:    "http://www.cdzdgw.com/",
-			SearchUrl:  "http://www.cdzdgw.com/s.php?q=",
-			Method:     "Get",
-			Params:     make(map[string](string)),
-			TargetItem: ".bookbox",
-			ItemRule:   ItemRule01,
+			Name:            "笔趣阁02",
+			HomeUrl:         "http://www.cdzdgw.com/",
+			SearchUrl:       "http://www.cdzdgw.com/s.php?q=",
+			Method:          "Get",
+			Params:          make(map[string](string)),
+			KeywordEncoding: "",
+			TargetItem:      ".bookbox",
+			ItemRule:        ItemRule01,
 		},
 		"12": NovelRule{
-			Name:       "笔趣阁03",
-			HomeUrl:    "http://www.biqugex.com/",
-			SearchUrl:  "http://www.biqugex.com/s.php?q=",
-			Method:     "Get",
-			Params:     make(map[string](string)),
-			TargetItem: ".bookbox",
-			ItemRule:   ItemRule01,
+			Name:            "笔趣阁03",
+			HomeUrl:         "http://www.biqugex.com/",
+			SearchUrl:       "http://www.biqugex.com/s.php?q=",
+			Method:          "Get",
+			Params:          make(map[string](string)),
+			KeywordEncoding: "",
+			TargetItem:      ".bookbox",
+			ItemRule:        ItemRule01,
+		},
+		"20": NovelRule{
+			Name:            "全本小说网01",
+			HomeUrl:         "https://www.ybdu.com/",
+			SearchUrl:       "https://www.ybdu.com/modules/article/search.php?searchtype=keywords&entry=1&searchkey=",
+			Method:          "Get",
+			Params:          make(map[string](string)),
+			KeywordEncoding: "gbk",
+			TargetItem:      "#detail-box",
+			ItemRule:        ItemRule03,
+		},
+		"20_1": NovelRule{
+			Name:            "全本小说网01",
+			HomeUrl:         "https://www.ybdu.com/",
+			SearchUrl:       "https://www.ybdu.com/modules/article/search.php?searchtype=keywords&entry=1&searchkey=",
+			Method:          "Get",
+			Params:          make(map[string](string)),
+			KeywordEncoding: "gbk",
+			TargetItem:      "ul.info",
+			ItemRule:        ItemRule04,
+		},
+		"30": NovelRule{
+			Name:            "新笔趣阁01",
+			HomeUrl:         "https://www.xxbiquge.com/",
+			SearchUrl:       "https://www.xxbiquge.com/search.php?keyword=",
+			Method:          "Get",
+			Params:          make(map[string](string)),
+			KeywordEncoding: "",
+			TargetItem:      "div.result-game-item",
+			ItemRule:        ItemRule05,
 		},
 		"100": NovelRule{
-			Name:       "新笔趣阁01",
-			HomeUrl:    "http://www.biqugetv.com/",
-			SearchUrl:  "http://zhannei.baidu.com/cse/search?click=1&s=16765504158186272814&q=",
-			Method:     "Get",
-			Params:     make(map[string](string)),
-			TargetItem: "div.result-list div.result-item",
-			ItemRule:   ItemRule02,
+			Name:            "新笔趣阁_百度01",
+			HomeUrl:         "http://www.biqugetv.com/",
+			SearchUrl:       "http://zhannei.baidu.com/cse/search?click=1&s=16765504158186272814&q=",
+			Method:          "Get",
+			Params:          make(map[string](string)),
+			KeywordEncoding: "",
+			TargetItem:      "div.result-list div.result-item",
+			ItemRule:        ItemRule02,
 		},
 		"110": NovelRule{
-			Name:       "笔下文学01",
-			HomeUrl:    "http://www.xbxwx.net/",
-			SearchUrl:  "http://so.xbxwx.net/cse/search?click=1&entry=1&s=10874778206555383279&q=",
-			Method:     "Get",
-			Params:     make(map[string](string)),
-			TargetItem: "div.result-list div.result-item",
-			ItemRule:   ItemRule02,
+			Name:            "笔下文学_百度01",
+			HomeUrl:         "http://www.xbxwx.net/",
+			SearchUrl:       "http://so.xbxwx.net/cse/search?click=1&entry=1&s=10874778206555383279&q=",
+			Method:          "Get",
+			Params:          make(map[string](string)),
+			KeywordEncoding: "",
+			TargetItem:      "div.result-list div.result-item",
+			ItemRule:        ItemRule02,
 		},
 		"120": NovelRule{
-			Name:       "顶点小说01",
-			HomeUrl:    "http://www.23wx.cc/du/99/99646/",
-			SearchUrl:  "http://zhannei.baidu.com/cse/search?s=17788970894453164958&q=",
-			Method:     "Get",
-			Params:     make(map[string](string)),
-			TargetItem: "div.result-list div.result-item",
-			ItemRule:   ItemRule02,
+			Name:            "顶点小说_百度01",
+			HomeUrl:         "http://www.23wx.cc/du/99/99646/",
+			SearchUrl:       "http://zhannei.baidu.com/cse/search?s=17788970894453164958&q=",
+			Method:          "Get",
+			Params:          make(map[string](string)),
+			KeywordEncoding: "",
+			TargetItem:      "div.result-list div.result-item",
+			ItemRule:        ItemRule02,
 		},
 	}
 )
